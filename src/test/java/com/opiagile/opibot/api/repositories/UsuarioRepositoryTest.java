@@ -26,6 +26,7 @@ public class UsuarioRepositoryTest {
 
 	private static final String EMAIL = "teste@teste.com";
 	private static final String NOME = "nome usuario";
+	private static final Long ID = 2L;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -56,6 +57,13 @@ public class UsuarioRepositoryTest {
 		Usuario usuario = this.usuarioRepository.findByNome(NOME);
 		
 		assertEquals(NOME, usuario.getNome());
+	}
+
+	@Test
+	public void testBuscarPorId() {
+		Usuario usuario = this.usuarioRepository.findById(ID);
+		
+		assertEquals(ID, usuario.getId());
 	}
 	
 }
