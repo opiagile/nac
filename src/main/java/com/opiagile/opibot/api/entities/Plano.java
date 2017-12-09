@@ -1,47 +1,43 @@
 package com.opiagile.opibot.api.entities;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
-import com.opiagile.opibot.api.enums.PerfilEnum;
-
 @Entity
-@Table(name = "usuario")
-public class Usuario implements Serializable {
-	private static final long serialVersionUID = 6293317283241646696L;
+@Table(name = "plano")
+public class Plano implements Serializable {	
+	private static final long serialVersionUID = 3018044343553735563L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.LAZY)
 	private Empresa empresa;
 	
-	@Column(name = "nome", nullable = false)
-	private String nome;
+	@Column(name = "descricao", nullable = false)
+	private String descricao;
 
-	@Column(name = "email", nullable = false)
-	private String email;
+	@Column(name = "periodo_contrato", nullable = false)
+	private String periodoContrato;
 
-	@Column(name = "senha", nullable = false)
-	private String senha;
-
-	@Enumerated(EnumType.STRING)
-	@Column(name = "perfil", nullable = false)
-	private PerfilEnum perfil;
+	@Column(name = "preco", nullable = false)
+	private BigDecimal preco;
+	
+	@Column(name = "funcionalidade", nullable = false)
+	private Funcionalidade funcionalidade;
 
 	@Column(name = "data_criacao", nullable = false)
 	private Date dataCriacao;
@@ -49,21 +45,21 @@ public class Usuario implements Serializable {
 	@Column(name = "data_atualizacao", nullable = false)
 	private Date dataAtualizacao;
 
-	public Usuario() {
-	}
-	
-	@PreUpdate
-	public void preUpdate() {
-		dataAtualizacao = new Date();
+	public Plano() {
 	}
 
-	@PrePersist
-	public void prePersist() {
-		final Date atual = new Date();
-		dataCriacao = atual;
-		dataAtualizacao = atual;
-	}
-	
+	@PreUpdate
+    public void preUpdate() {
+        dataAtualizacao = new Date();
+    }
+     
+    @PrePersist
+    public void prePersist() {
+        final Date atual = new Date();
+        dataCriacao = atual;
+        dataAtualizacao = atual;
+    }
+
 	public Long getId() {
 		return id;
 	}
@@ -80,36 +76,36 @@ public class Usuario implements Serializable {
 		this.empresa = empresa;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getPeriodoContrato() {
+		return periodoContrato;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setPeriodoContrato(String periodoContrato) {
+		this.periodoContrato = periodoContrato;
 	}
 
-	public String getSenha() {
-		return senha;
+	public BigDecimal getPreco() {
+		return preco;
 	}
 
-	public void setSenha(String senha) {
-		this.senha = senha;
+	public void setPreco(BigDecimal preco) {
+		this.preco = preco;
 	}
 
-	public PerfilEnum getPerfil() {
-		return perfil;
+	public Funcionalidade getFuncionalidade() {
+		return funcionalidade;
 	}
 
-	public void setPerfil(PerfilEnum perfil) {
-		this.perfil = perfil;
+	public void setFuncionalidade(Funcionalidade funcionalidade) {
+		this.funcionalidade = funcionalidade;
 	}
 
 	public Date getDataCriacao() {
@@ -127,19 +123,19 @@ public class Usuario implements Serializable {
 	public void setDataAtualizacao(Date dataAtualizacao) {
 		this.dataAtualizacao = dataAtualizacao;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((dataAtualizacao == null) ? 0 : dataAtualizacao.hashCode());
 		result = prime * result + ((dataCriacao == null) ? 0 : dataCriacao.hashCode());
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
 		result = prime * result + ((empresa == null) ? 0 : empresa.hashCode());
+		result = prime * result + ((funcionalidade == null) ? 0 : funcionalidade.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-		result = prime * result + ((perfil == null) ? 0 : perfil.hashCode());
-		result = prime * result + ((senha == null) ? 0 : senha.hashCode());
+		result = prime * result + ((periodoContrato == null) ? 0 : periodoContrato.hashCode());
+		result = prime * result + ((preco == null) ? 0 : preco.hashCode());
 		return result;
 	}
 
@@ -151,7 +147,7 @@ public class Usuario implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Usuario other = (Usuario) obj;
+		Plano other = (Plano) obj;
 		if (dataAtualizacao == null) {
 			if (other.dataAtualizacao != null)
 				return false;
@@ -162,40 +158,44 @@ public class Usuario implements Serializable {
 				return false;
 		} else if (!dataCriacao.equals(other.dataCriacao))
 			return false;
-		if (email == null) {
-			if (other.email != null)
+		if (descricao == null) {
+			if (other.descricao != null)
 				return false;
-		} else if (!email.equals(other.email))
+		} else if (!descricao.equals(other.descricao))
 			return false;
 		if (empresa == null) {
 			if (other.empresa != null)
 				return false;
 		} else if (!empresa.equals(other.empresa))
 			return false;
+		if (funcionalidade == null) {
+			if (other.funcionalidade != null)
+				return false;
+		} else if (!funcionalidade.equals(other.funcionalidade))
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (nome == null) {
-			if (other.nome != null)
+		if (periodoContrato == null) {
+			if (other.periodoContrato != null)
 				return false;
-		} else if (!nome.equals(other.nome))
+		} else if (!periodoContrato.equals(other.periodoContrato))
 			return false;
-		if (perfil != other.perfil)
-			return false;
-		if (senha == null) {
-			if (other.senha != null)
+		if (preco == null) {
+			if (other.preco != null)
 				return false;
-		} else if (!senha.equals(other.senha))
+		} else if (!preco.equals(other.preco))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", empresa=" + empresa + ", nome=" + nome + ", email=" + email + ", senha=" + senha
-				+ ", perfil=" + perfil + ", dataCriacao=" + dataCriacao + ", dataAtualizacao=" + dataAtualizacao + "]";
+		return "Plano [id=" + id + ", empresa=" + empresa + ", descricao=" + descricao + ", periodoContrato="
+				+ periodoContrato + ", preco=" + preco + ", funcionalidade=" + funcionalidade + ", dataCriacao="
+				+ dataCriacao + ", dataAtualizacao=" + dataAtualizacao + "]";
 	}
 
 }
