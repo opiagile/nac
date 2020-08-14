@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.opiagile</groupId>
-	<artifactId>opi-bot</artifactId>
+	<artifactId>nac</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>opi-bot</name>
+	<name>nac</name>
 	<description>API para o sistema de Chatbot</description>
 
 	<parent>
