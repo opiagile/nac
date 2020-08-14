@@ -5,13 +5,6 @@ jdk:
   - openjdk10
   - openjdk11
   - openjdk12
-
-addons:
-  apt:
-    sources:
-    	- github-git-lfs-xenial
-    packages:
-    	- git-lfs
       
 # git strips the wrapper jar file so we have to force its download during the build
 install:
